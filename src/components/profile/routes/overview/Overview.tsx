@@ -69,7 +69,7 @@ const Overview = () => {
     motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
 
   return (
-    <main className="p-6 max-w-7xl mx-auto space-y-8">
+    <main className="p-6 max-w-7xl w-full mx-auto space-y-8">
       <motion.section
         className="bg-background border rounded-xl p-6 shadow-sm"
         variants={itemVariants}

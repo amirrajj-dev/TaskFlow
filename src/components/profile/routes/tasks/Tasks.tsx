@@ -60,7 +60,7 @@ const Tasks = () => {
   };
 
   return (
-    <main className="max-w-7xl mx-auto p-6 space-y-6">
+    <main className="max-w-7xl w-full mx-auto p-6 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Tasks</h1>
         <Button onClick={openCreate} variant="outline" size="sm" className="flex items-center gap-2">
