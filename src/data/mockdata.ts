@@ -1,0 +1,70 @@
+// data/mockData.ts
+
+export const mockUser = {
+    id: "user_1",
+    name: "Jane Doe",
+    username: "janedoe",
+    email: "jane@example.com",
+    password: "hashedpassword", // don't use this in UI
+    role: "USER",
+    createdAt: new Date("2024-01-15T10:00:00Z"),
+    updatedAt: new Date("2024-05-10T12:00:00Z"),
+  };
+  
+  export const mockTodos = [
+    {
+      id: "todo_1",
+      title: "Finish onboarding flow",
+      description: "Complete the intro and connect DB",
+      status: "COMPLETED",
+      priority: "HIGH",
+      dueDate: new Date("2024-05-10T17:00:00Z"),
+      userId: "user_1",
+      createdAt: new Date("2024-05-01T09:00:00Z"),
+      updatedAt: new Date("2024-05-10T15:00:00Z"),
+    },
+    {
+      id: "todo_2",
+      title: "Write unit tests",
+      description: "Cover ProfilePage and TaskList components",
+      status: "IN_PROGRESS",
+      priority: "MEDIUM",
+      dueDate: new Date("2024-05-18T12:00:00Z"),
+      userId: "user_1",
+      createdAt: new Date("2024-05-12T08:30:00Z"),
+      updatedAt: new Date("2024-05-16T10:00:00Z"),
+    },
+    {
+      id: "todo_3",
+      title: "Add motivational quotes feature",
+      description: "",
+      status: "PENDING",
+      priority: "LOW",
+      dueDate: new Date("2024-05-20T18:00:00Z"),
+      userId: "user_1",
+      createdAt: new Date("2024-05-16T07:00:00Z"),
+      updatedAt: new Date("2024-05-16T07:00:00Z"),
+    },
+    {
+      id: "todo_4",
+      title: "Deploy to Vercel",
+      description: "Deploy the fullstack MVP",
+      status: "PENDING",
+      priority: "HIGH",
+      dueDate: null,
+      userId: "user_1",
+      createdAt: new Date("2024-05-15T11:45:00Z"),
+      updatedAt: new Date("2024-05-15T11:45:00Z"),
+    },
+    {
+      id: "todo_5",
+      title: "Style /profile/settings page",
+      description: "Make it responsive and clean",
+      status: "IN_PROGRESS",
+      priority: "MEDIUM",
+      dueDate: new Date("2024-05-19T15:00:00Z"),
+      userId: "user_1",
+      createdAt: new Date("2024-05-13T14:00:00Z"),
+      updatedAt: new Date("2024-05-16T09:30:00Z"),
+    },
+  ];  
