@@ -1,9 +1,16 @@
-import React from 'react'
+import Tasks from "@/components/profile/routes/tasks/Tasks";
 
-const Tasks = () => {
+
+export const metadata = {
+  title: "Tasks | TaksFlow",
+  description: "View and manage your tasks — filter by status, sort by priority or due date, and keep your productivity on track.",
+};
+
+
+const TasksPage = () => {
   return (
-    <div>Tasks</div>
+    <Tasks/>
   )
-}
+};
 
-export default Tasks
+export default TasksPage;
