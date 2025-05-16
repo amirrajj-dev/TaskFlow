@@ -5,10 +5,10 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TaskList from "./ui/TaskList";
 import TaskDialog from "./ui/Taskdialog";
-import type { Todo, STATUS, PRIORITY } from "@/generated/prisma";
+import type { Task, STATUS, PRIORITY } from "@/generated/prisma";
 
 // Dummy initial data
-const initialTasks: Todo[] = [
+const initialTasks: Task[] = [
   {
     id: "1",
     title: "Finish profile page UI",
@@ -26,8 +26,8 @@ const initialTasks: Todo[] = [
 ];
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState<Todo[]>(initialTasks);
-  const [editingTask, setEditingTask] = useState<Todo | null>(null);
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const openCreate = () => {
@@ -35,12 +35,12 @@ const Tasks = () => {
     setDialogOpen(true);
   };
 
-  const openEdit = (task: Todo) => {
+  const openEdit = (task: Task) => {
     setEditingTask(task);
     setDialogOpen(true);
   };
 
-  const saveTask = (task: Todo) => {
+  const saveTask = (task: Task) => {
     if (editingTask) {
       //? update task
       setTasks((prev) =>

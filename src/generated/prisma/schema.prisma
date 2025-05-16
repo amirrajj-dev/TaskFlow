@@ -32,12 +32,12 @@ model User {
   email     String   @unique @db.VarChar(100)
   password  String
   role      ROLE     @default(USER)
-  todos     Todo[]
+  todos     Task[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Todo {
+model Task {
   id          String    @id @default(cuid())
   title       String    @db.VarChar(150)
   description String?   @db.Text

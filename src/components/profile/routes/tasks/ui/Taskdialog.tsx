@@ -17,17 +17,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { PRIORITY, STATUS, Todo } from "@/generated/prisma";
+import { PRIORITY, STATUS, Task } from "@/generated/prisma";
 
 interface TaskDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (task: Omit<Todo, "id">) => void;
-  task: Todo | null;
+  onSave: (task: Omit<Task, "id">) => void;
+  task: Task | null;
 }
 
-const STATUS: STATUS[] = ["COMPLETED", "PENDING", "IN_PROGRESS"];
-const PRIORITY: PRIORITY[] = ["LOW", "MEDIUM", "HIGH"];
+const statusValues = ["COMPLETED", "PENDING", "IN_PROGRESS"];
+const priorityValues = ["LOW", "MEDIUM", "HIGH"];
 
 const TaskDialog: React.FC<TaskDialogProps> = ({ open, onOpenChange, onSave, task }) => {
   const [title, setTitle] = useState("");
@@ -105,7 +105,7 @@ const TaskDialog: React.FC<TaskDialogProps> = ({ open, onOpenChange, onSave, tas
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
-                {STATUS.map((s) => (
+                {statusValues.map((s) => (
                   <SelectItem key={s} value={s}>
                     {s}
                   </SelectItem>
@@ -123,7 +123,7 @@ const TaskDialog: React.FC<TaskDialogProps> = ({ open, onOpenChange, onSave, tas
                 <SelectValue placeholder="Select priority" />
               </SelectTrigger>
               <SelectContent>
-                {PRIORITY.map((p) => (
+                {priorityValues.map((p) => (
                   <SelectItem key={p} value={p}>
                     {p}
                   </SelectItem>

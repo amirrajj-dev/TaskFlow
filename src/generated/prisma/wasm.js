@@ -131,7 +131,7 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.TodoScalarFieldEnum = {
+exports.Prisma.TaskScalarFieldEnum = {
   id: 'id',
   title: 'title',
   description: 'description',
@@ -176,7 +176,7 @@ exports.PRIORITY = exports.$Enums.PRIORITY = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Todo: 'Todo'
+  Task: 'Task'
 };
 
 /**
