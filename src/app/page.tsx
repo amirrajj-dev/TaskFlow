@@ -1,11 +1,11 @@
-import { ModeToggle } from '@/components/shared/theme/ModeToggle'
+import Navbar from '@/components/shared/navbar/Navbar'
 import React from 'react'
 
 const Home = () => {
   
   return (
-    <div className='font-mono'>
-      <ModeToggle/>
+    <div className='font-mono max-w-7xl mx-auto p-4'>
+      <Navbar/>
     </div>
   )
 }
