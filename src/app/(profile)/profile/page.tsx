@@ -1,17 +1,5 @@
+import { motivationalQuotes } from "@/data/data";
 import { Metadata } from "next";
-
-const motivationalQuotes = [
-  "Discipline is choosing between what you want now and what you want most.",
-  "Start where you are. Use what you have. Do what you can.",
-  "Progress, not perfection. Keep showing up.",
-  "A little progress each day adds up to big results.",
-  "You don't need to see the whole staircase, just take the first step.",
-  "Consistency beats motivation. Build habits.",
-  "Make it happen. Shock everyone.",
-  "Done is better than perfect.",
-  "Success is built from daily routines, not occasional effort.",
-  "You're closer than you think — keep going.",
-];
 
 
 export const metadata : Metadata = {
