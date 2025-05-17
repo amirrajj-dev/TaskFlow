@@ -55,13 +55,13 @@ const Navbar = () => {
           ) : (
             <>
               <Link href="/signin">
-                <Button variant="outline" size="sm">
+                <Button variant="outline" size="sm" className="cursor-pointer">
                   <LogIn className="w-4 h-4 mr-2" />
                   Sign In
                 </Button>
               </Link>
               <Link href="/signup">
-                <Button size="sm">Sign Up</Button>
+                <Button size="sm" className="cursor-pointer">Sign Up</Button>
               </Link>
             </>
           )}
@@ -87,6 +87,7 @@ const Navbar = () => {
               side="right"
               className="w-[80vw] sm:w-72 p-6 space-y-6"
             >
+              <Logo/>
               <div className="pt-6 space-y-4">
                 {isLoggedIn ? (
                   <div className="flex flex-col  gap-4 p-1">

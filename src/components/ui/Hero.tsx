@@ -3,11 +3,12 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useAuthStore } from "@/store/auth.store";
 
 
 
 const Hero = () => {
-    const isAuthenticated = false;
+    const {isLoggedIn} = useAuthStore()
     return (
     <section className="text-center py-20 space-y-6">
       <motion.h1
@@ -16,7 +17,7 @@ const Hero = () => {
         transition={{ duration: 0.5 }}
         className="text-4xl md:text-5xl font-bold text-primary"
       >
-        {isAuthenticated ? "Welcome Back to TaskFlow" : "Organize Your Day with TaskFlow"}
+        {isLoggedIn ? "Welcome Back to TaskFlow" : "Organize Your Day with TaskFlow"}
       </motion.h1>
 
       <motion.p
@@ -25,7 +26,7 @@ const Hero = () => {
         transition={{ delay: 0.1, duration: 0.5 }}
         className="text-muted-foreground max-w-xl mx-auto text-lg"
       >
-        {isAuthenticated
+        {isLoggedIn
           ? "Jump into your tasks and keep up the productivity!"
           : "A clean, minimal, and powerful way to manage your daily tasks and stay productive."}
       </motion.p>
@@ -36,17 +37,17 @@ const Hero = () => {
         transition={{ delay: 0.2, duration: 0.4 }}
         className="flex justify-center gap-4"
       >
-        {isAuthenticated ? (
+        {isLoggedIn ? (
           <Link href="/profile">
-            <Button size="lg">Go to Dashboard</Button>
+            <Button size="lg" className="cursor-pointer">Go to Dashboard</Button>
           </Link>
         ) : (
           <>
             <Link href="/signup">
-              <Button size="lg">Get Started</Button>
+              <Button size="lg" className="cursor-pointer">Get Started</Button>
             </Link>
             <Link href="/signin">
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" className="cursor-pointer">
                 Sign In
               </Button>
             </Link>
