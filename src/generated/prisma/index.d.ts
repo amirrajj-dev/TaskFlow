@@ -1003,11 +1003,11 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    todos: number
+    tasks: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    todos?: boolean | UserCountOutputTypeCountTodosArgs
+    tasks?: boolean | UserCountOutputTypeCountTasksArgs
   }
 
   // Custom InputTypes
@@ -1024,7 +1024,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTodosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskWhereInput
   }
 
@@ -1221,7 +1221,7 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    todos?: boolean | User$todosArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1260,7 +1260,7 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "username" | "email" | "password" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    todos?: boolean | User$todosArgs<ExtArgs>
+    tasks?: boolean | User$tasksArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1269,7 +1269,7 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      todos: Prisma.$TaskPayload<ExtArgs>[]
+      tasks: Prisma.$TaskPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1674,7 +1674,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    todos<T extends User$todosArgs<ExtArgs> = {}>(args?: Subset<T, User$todosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tasks<T extends User$tasksArgs<ExtArgs> = {}>(args?: Subset<T, User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2100,9 +2100,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.todos
+   * User.tasks
    */
-  export type User$todosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Task
      */
@@ -3423,7 +3423,7 @@ export namespace Prisma {
     role?: EnumROLEFilter<"User"> | $Enums.ROLE
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    todos?: TaskListRelationFilter
+    tasks?: TaskListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3435,7 +3435,7 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    todos?: TaskOrderByRelationAggregateInput
+    tasks?: TaskOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3450,7 +3450,7 @@ export namespace Prisma {
     role?: EnumROLEFilter<"User"> | $Enums.ROLE
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    todos?: TaskListRelationFilter
+    tasks?: TaskListRelationFilter
   }, "id" | "username" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3565,7 +3565,7 @@ export namespace Prisma {
     role?: $Enums.ROLE
     createdAt?: Date | string
     updatedAt?: Date | string
-    todos?: TaskCreateNestedManyWithoutUserInput
+    tasks?: TaskCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3577,7 +3577,7 @@ export namespace Prisma {
     role?: $Enums.ROLE
     createdAt?: Date | string
     updatedAt?: Date | string
-    todos?: TaskUncheckedCreateNestedManyWithoutUserInput
+    tasks?: TaskUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -3589,7 +3589,7 @@ export namespace Prisma {
     role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    todos?: TaskUpdateManyWithoutUserNestedInput
+    tasks?: TaskUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3601,7 +3601,7 @@ export namespace Prisma {
     role?: EnumROLEFieldUpdateOperationsInput | $Enums.ROLE
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    todos?: TaskUncheckedUpdateManyWithoutUserNestedInput
+    tasks?: TaskUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3646,7 +3646,7 @@ export namespace Prisma {
     dueDate?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutTodosInput
+    user: UserCreateNestedOneWithoutTasksInput
   }
 
   export type TaskUncheckedCreateInput = {
@@ -3670,7 +3670,7 @@ export namespace Prisma {
     dueDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutTodosNestedInput
+    user?: UserUpdateOneRequiredWithoutTasksNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
@@ -4030,9 +4030,9 @@ export namespace Prisma {
     deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutTodosInput = {
-    create?: XOR<UserCreateWithoutTodosInput, UserUncheckedCreateWithoutTodosInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTodosInput
+  export type UserCreateNestedOneWithoutTasksInput = {
+    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
     connect?: UserWhereUniqueInput
   }
 
@@ -4052,12 +4052,12 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type UserUpdateOneRequiredWithoutTodosNestedInput = {
-    create?: XOR<UserCreateWithoutTodosInput, UserUncheckedCreateWithoutTodosInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTodosInput
-    upsert?: UserUpsertWithoutTodosInput
+  export type UserUpdateOneRequiredWithoutTasksNestedInput = {
+    create?: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTasksInput
+    upsert?: UserUpsertWithoutTasksInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTodosInput, UserUpdateWithoutTodosInput>, UserUncheckedUpdateWithoutTodosInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTasksInput, UserUpdateWithoutTasksInput>, UserUncheckedUpdateWithoutTasksInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -4308,7 +4308,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Task"> | Date | string
   }
 
-  export type UserCreateWithoutTodosInput = {
+  export type UserCreateWithoutTasksInput = {
     id?: string
     name: string
     username: string
@@ -4319,7 +4319,7 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserUncheckedCreateWithoutTodosInput = {
+  export type UserUncheckedCreateWithoutTasksInput = {
     id?: string
     name: string
     username: string
@@ -4330,23 +4330,23 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type UserCreateOrConnectWithoutTodosInput = {
+  export type UserCreateOrConnectWithoutTasksInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTodosInput, UserUncheckedCreateWithoutTodosInput>
+    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
   }
 
-  export type UserUpsertWithoutTodosInput = {
-    update: XOR<UserUpdateWithoutTodosInput, UserUncheckedUpdateWithoutTodosInput>
-    create: XOR<UserCreateWithoutTodosInput, UserUncheckedCreateWithoutTodosInput>
+  export type UserUpsertWithoutTasksInput = {
+    update: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
+    create: XOR<UserCreateWithoutTasksInput, UserUncheckedCreateWithoutTasksInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTodosInput = {
+  export type UserUpdateToOneWithWhereWithoutTasksInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTodosInput, UserUncheckedUpdateWithoutTodosInput>
+    data: XOR<UserUpdateWithoutTasksInput, UserUncheckedUpdateWithoutTasksInput>
   }
 
-  export type UserUpdateWithoutTodosInput = {
+  export type UserUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
@@ -4357,7 +4357,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type UserUncheckedUpdateWithoutTodosInput = {
+  export type UserUncheckedUpdateWithoutTasksInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     username?: StringFieldUpdateOperationsInput | string
