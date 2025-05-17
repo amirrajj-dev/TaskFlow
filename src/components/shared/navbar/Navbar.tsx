@@ -3,15 +3,26 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Menu, LogIn, LogOut, UserCircle } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { ModeToggle } from "@/components/shared/theme/ModeToggle";
 import Logo from "@/components/shared/logo/Logo";
+import { useAuthStore } from "@/store/auth.store";
+import { logout } from "@/actions/auth.action";
+import { toast } from "sonner";
 
 const Navbar = () => {
-  const isAuthenticated = true;
-
+  const { user, isLoggedIn, clearUser } = useAuthStore()
+  const handleLogout = async () => {
+    await logout()
+    toast.success("Logged out successfully" , {
+      style : {
+        backgroundColor : "#00bc7d"
+      }
+    })
+    clearUser()
+  }
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 md:px-8">
@@ -28,7 +39,7 @@ const Navbar = () => {
         {/* Actions (Desktop) */}
         <div className="hidden md:flex items-center gap-4">
           <ModeToggle />
-          {isAuthenticated ? (
+          {isLoggedIn ? (
             <>
               <Link href="/profile">
                 <Button variant="outline" size="sm" className="cursor-pointer">
@@ -36,7 +47,7 @@ const Navbar = () => {
                   Profile
                 </Button>
               </Link>
-              <Button variant="ghost" size="sm" className="cursor-pointer">
+              <Button variant="ghost" size="sm" className="cursor-pointer" onClick={()=>handleLogout()}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Logout
               </Button>
@@ -77,7 +88,7 @@ const Navbar = () => {
               className="w-[80vw] sm:w-72 p-6 space-y-6"
             >
               <div className="pt-6 space-y-4">
-                {isAuthenticated ? (
+                {isLoggedIn ? (
                   <div className="flex flex-col  gap-4 p-1">
                     <Link href={"/profile"}>
                       <Button
