@@ -1,12 +1,12 @@
 import { create } from 'zustand'
 import { getCurrentUser } from '@/actions/auth.action'
 import { persist } from 'zustand/middleware'
-import { User } from '@/generated/prisma'
+import { Task, User } from '@/generated/prisma'
 
 type AuthState = {
-  user: Partial<User> | null
+  user: User & {tasks : Task[]} | null
   isLoggedIn: boolean
-  setUser: (user: User) => void
+  setUser: (user: User & {tasks : Task[]}) => void
   clearUser: () => void
   getUser: () => Promise<void>
 }
@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthState>()(
       getUser: async () => {
         const res = await getCurrentUser()
         if (res.success && res.user) {
-          set({ user: res.user, isLoggedIn: true })
+          set({ user: res.user as any , isLoggedIn: true })
         } else {
           set({ user: null, isLoggedIn: false })
         }

@@ -4,41 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { motivationalQuotes } from "@/data/data";
-
-// Hardcoded user & tasks for demo
-const user = {
-  name: "Jane Doe",
-  username: "janedoe",
-  email: "jane@example.com",
-  role: "USER",
-};
-
-const tasks = [
-  {
-    id: "1",
-    title: "Finish profile page UI",
-    status: "COMPLETED",
-    dueDate: new Date("2025-05-20"),
-  },
-  {
-    id: "2",
-    title: "Fix bug in task list",
-    status: "IN_PROGRESS",
-    dueDate: new Date("2025-05-23"),
-  },
-  {
-    id: "3",
-    title: "Write documentation",
-    status: "PENDING",
-    dueDate: new Date("2025-05-25"),
-  },
-  {
-    id: "4",
-    title: "Plan next sprint",
-    status: "PENDING",
-    dueDate: new Date("2025-06-01"),
-  },
-];
+import { useAuthStore } from "@/store/auth.store";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -58,10 +24,11 @@ const itemVariants = {
 };
 
 const Overview = () => {
+  const {user} = useAuthStore()
   const stats = {
-    completed: tasks.filter((t) => t.status === "COMPLETED").length,
-    inProgress: tasks.filter((t) => t.status === "IN_PROGRESS").length,
-    pending: tasks.filter((t) => t.status === "PENDING").length,
+    completed: user?.tasks.filter((t) => t.status === "COMPLETED").length,
+    inProgress: user?.tasks.filter((t) => t.status === "IN_PROGRESS").length,
+    pending: user?.tasks.filter((t) => t.status === "PENDING").length,
   };
 
   // Random motivational quote
@@ -79,16 +46,16 @@ const Overview = () => {
         <h2 className="text-2xl font-semibold mb-4">User Info</h2>
         <div className="text-muted-foreground space-y-1">
           <p>
-            <strong>Name:</strong> {user.name}
+            <strong>Name:</strong> {user?.name}
           </p>
           <p>
-            <strong>Username:</strong> {user.username}
+            <strong>Username:</strong> {user?.username}
           </p>
           <p>
-            <strong>Email:</strong> {user.email}
+            <strong>Email:</strong> {user?.email}
           </p>
           <p>
-            <strong>Role:</strong> {user.role}
+            <strong>Role:</strong> {user?.role}
           </p>
         </div>
       </motion.section>
@@ -134,7 +101,7 @@ const Overview = () => {
           initial="hidden"
           animate="visible"
         >
-          {tasks.slice(0, 3).map(({ id, title, status, dueDate }) => (
+          {user!.tasks.length > 0 ? user!.tasks.slice(0, 3).map(({ id, title, status, dueDate }) => (
             <motion.li
               key={id}
               className="border rounded-lg p-4 flex justify-between items-center bg-background shadow-sm"
@@ -145,7 +112,7 @@ const Overview = () => {
               <div>
                 <p className="font-medium">{title}</p>
                 <p className="text-sm text-muted-foreground">
-                  Due: {dueDate.toLocaleDateString()}
+                  Due: {dueDate?.toLocaleDateString()}
                 </p>
               </div>
               <span
@@ -161,7 +128,17 @@ const Overview = () => {
                 {status.replace("_", " ")}
               </span>
             </motion.li>
-          ))}
+          )) : (
+            <motion.div
+              className="border rounded-lg p-4 flex justify-between items-center bg-background shadow-sm"
+              variants={itemVariants}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 120 }}
+            >
+              <p className="font-medium">No tasks found.</p>
+            </motion.div>
+          )}
         </motion.ul>
       </section>
 

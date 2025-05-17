@@ -1,13 +1,16 @@
-import Sidebar from '@/components/profile/ui/sidebar/Sidebar'
-import React from 'react'
+import Sidebar from "@/components/profile/ui/sidebar/Sidebar";
+import AuthProvider from "@/components/providers/AuthProvider";
+import React from "react";
 
-const ProfileLayout = ({children} : {children : React.ReactNode}) => {
+const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-screen">
-        <Sidebar/>
+    <AuthProvider>
+      <div className="flex min-h-screen">
+        <Sidebar />
         {children}
-    </div>
-  )
-}
+      </div>
+    </AuthProvider>
+  );
+};
 
-export default ProfileLayout
+export default ProfileLayout;
