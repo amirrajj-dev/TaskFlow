@@ -1,10 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { motivationalQuotes } from "@/data/data";
 import { useAuthStore } from "@/store/auth.store";
+import { useTaskStore } from "@/store/task.store";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -25,10 +26,14 @@ const itemVariants = {
 
 const Overview = () => {
   const {user} = useAuthStore()
+  const {getUserTasks , tasks} = useTaskStore()
+  useEffect(()=>{
+    getUserTasks()
+  } , [])
   const stats = {
-    completed: user?.tasks.filter((t) => t.status === "COMPLETED").length,
-    inProgress: user?.tasks.filter((t) => t.status === "IN_PROGRESS").length,
-    pending: user?.tasks.filter((t) => t.status === "PENDING").length,
+    completed: tasks?.filter((t) => t.status === "COMPLETED").length,
+    inProgress: tasks?.filter((t) => t.status === "IN_PROGRESS").length,
+    pending: tasks?.filter((t) => t.status === "PENDING").length,
   };
 
   // Random motivational quote
@@ -101,7 +106,7 @@ const Overview = () => {
           initial="hidden"
           animate="visible"
         >
-          {user!.tasks.length > 0 ? user!.tasks.slice(0, 3).map(({ id, title, status, dueDate }) => (
+          {tasks.length > 0 ? tasks.slice(0, 3).map(({ id, title, status, dueDate }) => (
             <motion.li
               key={id}
               className="border rounded-lg p-4 flex justify-between items-center bg-background shadow-sm"

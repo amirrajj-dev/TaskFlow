@@ -81,8 +81,7 @@ export const signup =  async (user : Pick<User , 'name' | 'email' | 'username' |
                 name : newUser.name,
                 username : newUser.username,
                 email : newUser.email,
-                role : newUser.role,
-                tasks : []
+                role : newUser.role
             }
         }
     } catch (error) {
@@ -121,9 +120,6 @@ export const signin = async (user : Pick<User , 'email' | 'password'>) => {
         const existingUser = await prisma.user.findUnique({
             where : {
                 email
-            },
-            include : {
-                tasks : true
             }
         })
         if (!existingUser) {
@@ -164,8 +160,7 @@ export const signin = async (user : Pick<User , 'email' | 'password'>) => {
                 name : existingUser.name,
                 username : existingUser.username,
                 email : existingUser.email,
-                role : existingUser.role,
-                tasks : existingUser.tasks
+                role : existingUser.role
             }
         }
     } catch (error) {
@@ -192,9 +187,6 @@ export const getCurrentUser = async () => {
         const user = await prisma.user.findUnique({
             where : {
                 id : decodedToken.id
-            },
-            include : {
-                tasks : true
             }
         })
         if (!user) {
@@ -212,8 +204,7 @@ export const getCurrentUser = async () => {
                 name : user.name,
                 username : user.username,
                 email : user.email,
-                role : user.role,
-                tasks : user.tasks
+                role : user.role
             }
         }
     } catch (error) {
