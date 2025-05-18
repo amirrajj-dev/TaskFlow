@@ -117,7 +117,7 @@ const Overview = () => {
               <div>
                 <p className="font-medium">{title}</p>
                 <p className="text-sm text-muted-foreground">
-                  Due: {dueDate?.toLocaleDateString()}
+                  Due: {dueDate ? new Date(dueDate).toLocaleDateString() : "—"}
                 </p>
               </div>
               <span

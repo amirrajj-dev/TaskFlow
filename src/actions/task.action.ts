@@ -59,7 +59,34 @@ export const addTask = async (
 
 export const updateTask = async () => {};
 
-export const deleteTask = async () => {};
+export const deleteTask = async (id : string) => {
+  try {
+    if (!id){
+      return {
+        error: "Task id is required",
+        success: false,
+        status: 400,
+      }
+    }
+    await prisma.task.deleteMany({
+      where : {
+        id
+      }
+    })
+    revalidatePath("/profile/tasks")
+    return {
+      success: true,
+      status: 200,
+      message: "Task deleted successfully",
+    };
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Something went wrong",
+      success: false,
+      status: 500,
+    }
+  }
+};
 
 export const getTasks = async () => {
     try {

@@ -25,9 +25,9 @@ import { Loader2 } from "lucide-react";
 interface TaskDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSave: (task: Omit<Task, "id" | "createdAt" | "updatedAt">) => void;
+  onSave: (task: Omit<Task, "id" | "createdAt" | "updatedAt">) => Promise<{success : boolean}>;
   task: Task | null;
-  isLoading : boolean
+  isLoading: boolean;
 }
 
 const statusValues = ["COMPLETED", "PENDING", "IN_PROGRESS"];
@@ -38,7 +38,7 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
   onOpenChange,
   onSave,
   task,
-  isLoading
+  isLoading,
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -55,15 +55,11 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
       setPriority(task.priority);
       setDueDate(task.dueDate?.toLocaleDateString() || "");
     } else {
-      setTitle("");
-      setDescription("");
-      setStatus("PENDING");
-      setPriority("LOW");
-      setDueDate("");
+      resetDialog();
     }
   }, [task]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!title.trim() || !priority || !status) {
       toast.error("All fields are required", {
         style: {
@@ -72,7 +68,7 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
       });
       return;
     }
-    onSave({
+    const res = await onSave({
       title,
       description,
       status,
@@ -80,7 +76,19 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
       dueDate: new Date(dueDate),
       userId: user!.id,
     });
+    if (res.success){
+      resetDialog();
+      onOpenChange(false);
+    } 
   };
+
+  function resetDialog() {
+    setTitle("");
+    setDescription("");
+    setStatus("PENDING");
+    setPriority("LOW");
+    setDueDate("");
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -177,12 +185,13 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
             <Button
               type="button"
               variant="outline"
+              className="cursor-pointer"
               onClick={() => onOpenChange(false)}
             >
               Cancel
             </Button>
             {task ? (
-              <Button type="submit">
+              <Button type="submit" className="cursor-pointer">
                 {isLoading ? (
                   <Loader2 className="size-5 animate-spin" />
                 ) : (
@@ -190,7 +199,7 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
                 )}
               </Button>
             ) : (
-              <Button type="submit">
+              <Button type="submit" className="cursor-pointer">
                 {isLoading ? (
                   <Loader2 className="size-5 animate-spin" />
                 ) : (

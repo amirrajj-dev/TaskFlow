@@ -5,14 +5,12 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TaskList from "./ui/TaskList";
 import TaskDialog from "./ui/Taskdialog";
-import type { Task, STATUS, PRIORITY } from "@/generated/prisma";
+import type { Task } from "@/generated/prisma";
 import { toast } from "sonner";
 import { useTaskStore } from "@/store/task.store";
 
 const Tasks = () => {
-  const {addTask , getUserTasks , isLoading} = useTaskStore()
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const {addTask , getUserTasks , isLoading , openAddEditDialog , setOpenAddEditDialog , setEditingTask , editingTask} = useTaskStore()
 
   useEffect(() => {
    getUserTasks()
@@ -20,26 +18,19 @@ const Tasks = () => {
 
   const openCreate = () => {
     setEditingTask(null);
-    setDialogOpen(true);
-  };
-
-  const openEdit = (task: Task) => {
-    setEditingTask(task);
-    setDialogOpen(true);
+    setOpenAddEditDialog(true);
   };
 
   const saveTask = async (task: Omit<Task, "createdAt" | "updatedAt" | "id">) => {
     if (editingTask) {
       //? update task
     } else {
-      await addTask(task as Task);
+     const res = await addTask(task as Task);
+     return {
+      success : res.success
+     }
     }
-    setDialogOpen(false);
-  };
-
-  const deleteTask = (id: string) => {
-    if (confirm("Are you sure you want to delete this task?")) {
-    }
+    setOpenAddEditDialog(false);
   };
 
   return (
@@ -50,17 +41,17 @@ const Tasks = () => {
           onClick={openCreate}
           variant="outline"
           size="sm"
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 cursor-pointer"
         >
           <Plus className="w-4 h-4" /> Add Task
         </Button>
       </div>
 
-      <TaskList onEdit={openEdit} onDelete={deleteTask} />
+      <TaskList />
 
       <TaskDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
+        open={openAddEditDialog}
+        onOpenChange={setOpenAddEditDialog}
         onSave={saveTask}
         task={editingTask}
         isLoading={isLoading}

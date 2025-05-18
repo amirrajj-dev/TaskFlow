@@ -19,16 +19,24 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="border rounded-lg p-4 flex justify-between items-center bg-background shadow-sm"
+      className="border rounded-lg p-4 flex justify-between items-start bg-background shadow-sm"
     >
-      <div>
-        <h3 className="font-semibold text-lg">{task.title}</h3>
-        <p className="text-sm text-muted-foreground">
+      <div className="flex-1">
+        <h3 className="font-semibold text-lg mb-1">{task.title}</h3>
+        
+        {task.description && (
+          <p className="text-sm text-muted-foreground mb-2 whitespace-pre-line">
+            {task.description}
+          </p>
+        )}
+
+        <p className="text-xs text-muted-foreground">
           Priority: {task.priority} | Status: {task.status} | Due:{" "}
           {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : "—"}
         </p>
       </div>
-      <div className="flex gap-2">
+
+      <div className="flex gap-2 mt-1 ml-4">
         <Button size="icon" variant="ghost" onClick={onEdit} aria-label="Edit task">
           <Edit className="w-5 h-5" />
         </Button>

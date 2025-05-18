@@ -3,12 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Menu,
-  LayoutDashboard,
-  Settings,
-  ListTodo,
-} from "lucide-react";
+import { Menu, LayoutDashboard, Settings, ListTodo } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
@@ -26,10 +21,16 @@ const Sidebar = () => {
   const pathname = usePathname();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  const SidebarContent = ({ onNavItemClick }: { onNavItemClick?: () => void }) => (
+  const SidebarContent = ({
+    onNavItemClick,
+  }: {
+    onNavItemClick?: () => void;
+  }) => (
     <div className="flex flex-col h-full space-y-6">
       <div className="flex items-center justify-between">
-        <Logo />
+        <Link href={"/"} className="flex-1">
+          <Logo />
+        </Link>
         <ModeToggle />
       </div>
 
