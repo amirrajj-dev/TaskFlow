@@ -57,7 +57,44 @@ export const addTask = async (
   }
 };
 
-export const updateTask = async () => {};
+export const updateTask = async (id : string , task : Partial<Task>) => {
+  try {
+    if (!id){
+      return {
+        error: "Task id is required",
+        success: false,
+        status: 400
+      }
+    }
+    const taskRes = await prisma.task.findUnique({where: {id}})
+    if (!taskRes){
+      return {
+        error: "Task not found",
+        success: false,
+        status: 404
+      }
+    }
+    const updatedTask = await prisma.task.update({
+      where : {
+        id
+      },
+      data : task
+    })
+    revalidatePath("/profile/tasks")
+    return {
+      success: true,
+      status: 200,
+      task: updatedTask,
+      message: "Task updated successfully",
+    };
+  } catch (error) {
+    return {
+      error: error instanceof Error ? error.message : "Something went wrong",
+      success: false,
+      status: 500
+    }
+  }
+};
 
 export const deleteTask = async (id : string) => {
   try {
@@ -68,7 +105,7 @@ export const deleteTask = async (id : string) => {
         status: 400,
       }
     }
-    await prisma.task.deleteMany({
+    await prisma.task.delete({
       where : {
         id
       }

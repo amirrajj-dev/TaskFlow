@@ -21,12 +21,12 @@ import { PRIORITY, STATUS, Task } from "@/generated/prisma";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/auth.store";
 import { Loader2 } from "lucide-react";
+import { useTaskStore } from "@/store/task.store";
 
 interface TaskDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: (task: Omit<Task, "id" | "createdAt" | "updatedAt">) => Promise<{success : boolean}>;
-  task: Task | null;
   isLoading: boolean;
 }
 
@@ -37,7 +37,6 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
   open,
   onOpenChange,
   onSave,
-  task,
   isLoading,
 }) => {
   const [title, setTitle] = useState("");
@@ -46,18 +45,19 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
   const [priority, setPriority] = useState<PRIORITY>("LOW");
   const [dueDate, setDueDate] = useState("");
   const { user } = useAuthStore();
+  const {editingTask , setEditingTask} = useTaskStore()
 
   useEffect(() => {
-    if (task) {
-      setTitle(task.title);
-      setDescription(task.description || "");
-      setStatus(task.status);
-      setPriority(task.priority);
-      setDueDate(task.dueDate?.toLocaleDateString() || "");
+    if (editingTask) {
+      setTitle(editingTask.title);
+      setDescription(editingTask.description || "");
+      setStatus(editingTask.status);
+      setPriority(editingTask.priority);
+      setDueDate(editingTask.dueDate ? new Date(editingTask.dueDate).toISOString().slice(0 , 10) : "");
     } else {
       resetDialog();
     }
-  }, [task]);
+  }, [editingTask]);
 
   const handleSubmit = async () => {
     if (!title.trim() || !priority || !status) {
@@ -94,7 +94,7 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{task ? "Edit Task" : "New Task"}</DialogTitle>
+          <DialogTitle>{editingTask ? "Edit Task" : "New Task"}</DialogTitle>
         </DialogHeader>
         <form
           onSubmit={(e) => {
@@ -186,11 +186,11 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
               type="button"
               variant="outline"
               className="cursor-pointer"
-              onClick={() => onOpenChange(false)}
+              onClick={() =>{ onOpenChange(false);resetDialog();setEditingTask(null)} }
             >
               Cancel
             </Button>
-            {task ? (
+            {editingTask ? (
               <Button type="submit" className="cursor-pointer">
                 {isLoading ? (
                   <Loader2 className="size-5 animate-spin" />

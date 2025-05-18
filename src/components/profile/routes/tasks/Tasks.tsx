@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TaskList from "./ui/TaskList";
 import TaskDialog from "./ui/Taskdialog";
 import type { Task } from "@/generated/prisma";
-import { toast } from "sonner";
 import { useTaskStore } from "@/store/task.store";
 
 const Tasks = () => {
-  const {addTask , getUserTasks , isLoading , openAddEditDialog , setOpenAddEditDialog , setEditingTask , editingTask} = useTaskStore()
+  const {addTask , editTask , getUserTasks , isLoading , openAddEditDialog , setOpenAddEditDialog , setEditingTask , editingTask} = useTaskStore()
 
   useEffect(() => {
    getUserTasks()
@@ -23,14 +22,17 @@ const Tasks = () => {
 
   const saveTask = async (task: Omit<Task, "createdAt" | "updatedAt" | "id">) => {
     if (editingTask) {
-      //? update task
+      console.log(editingTask);
+      const res = await editTask(editingTask.id, task);
+      return {
+        success : res.success
+      }
     } else {
      const res = await addTask(task as Task);
      return {
       success : res.success
      }
     }
-    setOpenAddEditDialog(false);
   };
 
   return (
@@ -53,7 +55,6 @@ const Tasks = () => {
         open={openAddEditDialog}
         onOpenChange={setOpenAddEditDialog}
         onSave={saveTask}
-        task={editingTask}
         isLoading={isLoading}
       />
     </main>

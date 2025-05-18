@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Task } from "@/generated/prisma";
-import { addTask, deleteTask, getTasks } from "@/actions/task.action";
+import { addTask, deleteTask, getTasks, updateTask } from "@/actions/task.action";
 import { toast } from "sonner";
 
 interface TaskStore {
@@ -12,6 +12,7 @@ interface TaskStore {
   deletingTask : null | Pick<Task , "id" | "title">
   setEditingTask: (task: Task | null) =>void;
   deleteTask : (id : string) =>void;
+  editTask : (id : string , task : Partial<Task>) => Promise<{success : boolean}>
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   getUserTasks: () => Promise<void>;
@@ -51,7 +52,7 @@ export const useTaskStore = create<TaskStore>()(
                     backgroundColor : "#00bc7d"
                 }
             });
-            set({ tasks: [...get().tasks, res.task as Task] });
+            set({ tasks: [...get().tasks, res.task as Task] , isLoading: false , openAddEditDialog : false });
             return {
               success : true
             }
@@ -77,6 +78,54 @@ export const useTaskStore = create<TaskStore>()(
           set({ isLoading: false });
         }
       },
+      editTask : async (id : string , task : Partial<Task>) => {
+        try {
+          if (id){
+            set({ isLoading: true });
+            const res = await updateTask(id , task);
+            if (res.success) {
+              toast.success("Task updated successfully!" , {
+                  style : {
+                      backgroundColor : "#00bc7d"
+                  }
+              });
+              set({ tasks: get().tasks.map((task) => task.id === id ? res.task as Task : task) });
+              set({ editingTask : null , openAddEditDialog : false });
+              return {
+                success : true
+              }
+            }else{
+              toast.error(res.error || "Failed to update task" , {
+                style : {
+                  backgroundColor : "#ec003f"
+                }
+              });
+              return {
+                success : false
+              }
+            }
+          }else{
+            toast.error("Task id is required" , {
+              style : {
+                backgroundColor : "#ec003f"
+              }
+            });
+            return {
+              success : false
+            }
+          }
+        } catch (error) {
+          set({
+            error:
+              error instanceof Error ? error.message : "Something went wrong",
+          });
+          return {
+            success : false
+          }
+        } finally {
+          set({ isLoading: false });
+        }
+        },
       deleteTask : async (id : string) => {
         try {
           if (id){
@@ -113,8 +162,8 @@ export const useTaskStore = create<TaskStore>()(
         }
       },
       setIsLoading: (isLoading) => set({ isLoading }),
-      getUserTasks: async () => {
-        if (get().tasks.length > 0) return;
+      getUserTasks: async (force = false) => {
+        if (!force && get().tasks.length > 0) return;
         try {
           set({ isLoading: true });
           const res = await getTasks();

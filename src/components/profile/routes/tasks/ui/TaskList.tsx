@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import TaskItem from "./TaskItem";
 import { Task } from "@/generated/prisma";
 import { AnimatePresence } from "framer-motion";
