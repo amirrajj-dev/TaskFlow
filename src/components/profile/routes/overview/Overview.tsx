@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { motivationalQuotes } from "@/data/data";
 import { useAuthStore } from "@/store/auth.store";
 import { useTaskStore } from "@/store/task.store";
+import OverviewCard from "./ui/OverviewCard";
 
 const containerVariants = {
   hidden: { opacity: 0, y: 10 },
@@ -25,12 +26,13 @@ const itemVariants = {
 };
 
 const Overview = () => {
-  const {user} = useAuthStore()
-  const {getUserTasks , tasks} = useTaskStore()
-  useEffect(()=>{
-    getUserTasks()
-  } , [])
+  const { user } = useAuthStore();
+  const { getUserTasks, tasks } = useTaskStore();
+  useEffect(() => {
+    getUserTasks();
+  }, []);
   const stats = {
+    all : tasks?.length,
     completed: tasks?.filter((t) => t.status === "COMPLETED").length,
     inProgress: tasks?.filter((t) => t.status === "IN_PROGRESS").length,
     pending: tasks?.filter((t) => t.status === "PENDING").length,
@@ -71,31 +73,10 @@ const Overview = () => {
         initial="hidden"
         animate="visible"
       >
-        <motion.div
-          className="bg-background border rounded-xl p-4 shadow-sm text-center"
-          variants={itemVariants}
-        >
-          <h3 className="text-sm font-medium text-muted-foreground">
-            Completed
-          </h3>
-          <p className="text-3xl font-bold text-primary">{stats.completed}</p>
-        </motion.div>
-        <motion.div
-          className="bg-background border rounded-xl p-4 shadow-sm text-center"
-          variants={itemVariants}
-        >
-          <h3 className="text-sm font-medium text-muted-foreground">
-            In Progress
-          </h3>
-          <p className="text-3xl font-bold text-yellow-500">{stats.inProgress}</p>
-        </motion.div>
-        <motion.div
-          className="bg-background border rounded-xl p-4 shadow-sm text-center"
-          variants={itemVariants}
-        >
-          <h3 className="text-sm font-medium text-muted-foreground">Pending</h3>
-          <p className="text-3xl font-bold text-rose-500">{stats.pending}</p>
-        </motion.div>
+        <OverviewCard title="Total Tasks" value={stats.all} color="text-indigo-600" />
+        <OverviewCard title="Completed" value={stats.completed} color="text-primary" />
+        <OverviewCard title="Pending" value={stats.pending} color="text-rose-600" />
+        <OverviewCard title="In Progress" value={stats.inProgress} color="text-yellow-600" />
       </motion.section>
 
       <section>
@@ -106,34 +87,37 @@ const Overview = () => {
           initial="hidden"
           animate="visible"
         >
-          {tasks.length > 0 ? tasks.slice(0, 3).map(({ id, title, status, dueDate }) => (
-            <motion.li
-              key={id}
-              className="border rounded-lg p-4 flex justify-between items-center bg-background shadow-sm"
-              variants={itemVariants}
-              whileHover={{ scale: 1.03 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div>
-                <p className="font-medium">{title}</p>
-                <p className="text-sm text-muted-foreground">
-                  Due: {dueDate ? new Date(dueDate).toLocaleDateString() : "—"}
-                </p>
-              </div>
-              <span
-                className={cn(
-                  "rounded-full px-3 py-1 text-xs font-semibold",
-                  status === "COMPLETED"
-                    ? "bg-primary/20 text-primary"
-                    : status === "IN_PROGRESS"
-                    ? "bg-yellow-500/20 text-yellow-600"
-                    : "bg-rose-500/20 text-rose-600"
-                )}
+          {tasks.length > 0 ? (
+            tasks.slice(0, 3).map(({ id, title, status, dueDate }) => (
+              <motion.li
+                key={id}
+                className="border rounded-lg p-4 flex justify-between items-center bg-background shadow-sm"
+                variants={itemVariants}
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                {status.replace("_", " ")}
-              </span>
-            </motion.li>
-          )) : (
+                <div>
+                  <p className="font-medium">{title}</p>
+                  <p className="text-sm text-muted-foreground">
+                    Due:{" "}
+                    {dueDate ? new Date(dueDate).toLocaleDateString() : "—"}
+                  </p>
+                </div>
+                <span
+                  className={cn(
+                    "rounded-full px-3 py-1 text-xs font-semibold",
+                    status === "COMPLETED"
+                      ? "bg-primary/20 text-primary"
+                      : status === "IN_PROGRESS"
+                      ? "bg-yellow-500/20 text-yellow-600"
+                      : "bg-rose-500/20 text-rose-600"
+                  )}
+                >
+                  {status.replace("_", " ")}
+                </span>
+              </motion.li>
+            ))
+          ) : (
             <motion.div
               className="border rounded-lg p-4 flex justify-between items-center bg-background shadow-sm"
               variants={itemVariants}
