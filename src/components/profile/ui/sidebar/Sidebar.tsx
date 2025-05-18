@@ -26,7 +26,7 @@ const Sidebar = () => {
   }: {
     onNavItemClick?: () => void;
   }) => (
-    <div className="flex flex-col h-full space-y-6">
+    <div className="flex flex-col h-full space-y-6 fixed">
       <div className="flex items-center justify-between">
         <Link href={"/"} className="flex-1">
           <Logo />

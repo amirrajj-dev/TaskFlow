@@ -32,13 +32,15 @@ const Overview = () => {
     getUserTasks();
   }, []);
   const stats = {
-    all : tasks?.length,
+    all: tasks?.length,
     completed: tasks?.filter((t) => t.status === "COMPLETED").length,
     inProgress: tasks?.filter((t) => t.status === "IN_PROGRESS").length,
     pending: tasks?.filter((t) => t.status === "PENDING").length,
   };
 
-  // Random motivational quote
+  const completionRate =
+    stats.all > 0 ? (stats.completed / stats.all) * 100 : 0;
+
   const randomQuote =
     motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
 
@@ -73,10 +75,31 @@ const Overview = () => {
         initial="hidden"
         animate="visible"
       >
-        <OverviewCard title="Total Tasks" value={stats.all} color="text-indigo-600" />
-        <OverviewCard title="Completed" value={stats.completed} color="text-primary" />
-        <OverviewCard title="Pending" value={stats.pending} color="text-rose-600" />
-        <OverviewCard title="In Progress" value={stats.inProgress} color="text-yellow-600" />
+        <OverviewCard
+          title="Total Tasks"
+          value={stats.all}
+          color="text-indigo-600"
+        />
+        <OverviewCard
+          title="Completed"
+          value={stats.completed}
+          color="text-primary"
+        />
+        <OverviewCard
+          title="Pending"
+          value={stats.pending}
+          color="text-rose-600"
+        />
+        <OverviewCard
+          title="In Progress"
+          value={stats.inProgress}
+          color="text-yellow-600"
+        />
+        <OverviewCard
+          title="Completion Rate"
+          value={`${completionRate.toFixed(1)}%`}
+          color="text-green-600"
+        />
       </motion.section>
 
       <section>

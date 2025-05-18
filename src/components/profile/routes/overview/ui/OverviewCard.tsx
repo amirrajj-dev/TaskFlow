@@ -6,7 +6,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const OverviewCard : FC<{title : string; value : number , color : string}> = ({title , value , color}) => {
+const OverviewCard : FC<{title : string; value : string | number , color : string}> = ({title , value , color}) => {
   return (
     <motion.div
       className="bg-background border rounded-xl p-4 shadow-sm text-center"
