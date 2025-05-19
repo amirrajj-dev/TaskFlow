@@ -161,7 +161,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\codes\\2025\\Day__127\\todo-app\\src\\generated\\prisma",
+      "value": "D:\\codes\\2025\\Day__129\\todo-app\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -172,10 +172,14 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\codes\\2025\\Day__127\\todo-app\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\codes\\2025\\Day__129\\todo-app\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -198,8 +202,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum STATUS {\n  COMPLETED\n  PENDING\n  IN_PROGRESS\n}\n\nenum ROLE {\n  USER\n  ADMIN\n}\n\nenum PRIORITY {\n  LOW\n  MEDIUM\n  HIGH\n}\n\nmodel User {\n  id        String   @id @default(cuid())\n  name      String   @db.VarChar(100)\n  username  String   @unique @db.VarChar(50)\n  email     String   @unique @db.VarChar(100)\n  password  String\n  role      ROLE     @default(USER)\n  tasks     Task[]\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Task {\n  id          String    @id @default(cuid())\n  title       String    @db.VarChar(150)\n  description String?   @db.Text\n  status      STATUS    @default(PENDING)\n  priority    PRIORITY  @default(LOW)\n  dueDate     DateTime?\n  userId      String\n  user        User      @relation(fields: [userId], references: [id])\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n",
-  "inlineSchemaHash": "1fc6c933573e581d710fa482b26d096eed1e11d43714baf5660aacee8a4e7546",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum STATUS {\n  COMPLETED\n  PENDING\n  IN_PROGRESS\n}\n\nenum ROLE {\n  USER\n  ADMIN\n}\n\nenum PRIORITY {\n  LOW\n  MEDIUM\n  HIGH\n}\n\nmodel User {\n  id        String   @id @default(cuid())\n  name      String   @db.VarChar(100)\n  username  String   @unique @db.VarChar(50)\n  email     String   @unique @db.VarChar(100)\n  password  String\n  role      ROLE     @default(USER)\n  tasks     Task[]\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Task {\n  id          String    @id @default(cuid())\n  title       String    @db.VarChar(150)\n  description String?   @db.Text\n  status      STATUS    @default(PENDING)\n  priority    PRIORITY  @default(LOW)\n  dueDate     DateTime?\n  userId      String\n  user        User      @relation(fields: [userId], references: [id])\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime  @updatedAt\n}\n",
+  "inlineSchemaHash": "f34a82bedca0a66c8a440d6590367fb0ce2879f7dd41c40301a87e97911e3d18",
   "copyEngine": true
 }
 config.dirname = '/'
