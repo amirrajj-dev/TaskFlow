@@ -49,7 +49,7 @@ const Signup = () => {
           backgroundColor : "#00bc7d"
         }
       });
-      setUser(res.user);
+      setUser(res.user as any);
       setSubmittedSuccesFul(true);
       router.push("/")
     }

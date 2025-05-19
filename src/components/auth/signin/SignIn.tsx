@@ -52,7 +52,7 @@ const Signin = () => {
           backgroundColor: "#00bc7d"
         }
       })
-      setUser(res.user)
+      setUser(res.user as any)
       setSubmittedSuccessful(true)
       router.push("/")
     }

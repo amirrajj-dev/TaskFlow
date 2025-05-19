@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const TaskList = () => {
   const {
@@ -29,7 +30,9 @@ const TaskList = () => {
     setDeletingTask,
   } = useTaskStore();
 
-  const [filterStatus, setFilterStatus] = useState<"all" | "completed" | "pending">("all");
+  const [filterStatus, setFilterStatus] = useState<
+    "all" | "completed" | "pending" | "in_progress"
+  >("all");
   const [sortBy, setSortBy] = useState<"createdAt" | "title">("createdAt");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -61,14 +64,17 @@ const TaskList = () => {
       result = result.filter((t) => t.status === "COMPLETED");
     } else if (filterStatus === "pending") {
       result = result.filter((t) => t.status === "PENDING");
+    }else if (filterStatus === "in_progress") {
+      result = result.filter((t) => t.status === "IN_PROGRESS");
     }
 
     // Filter by search query
     if (searchQuery.trim()) {
       const q = searchQuery.trim().toLowerCase();
-      result = result.filter((t) =>
-        t.title.toLowerCase().includes(q) ||
-        t.description?.toLowerCase().includes(q)
+      result = result.filter(
+        (t) =>
+          t.title.toLowerCase().includes(q) ||
+          t.description?.toLowerCase().includes(q)
       );
     }
 
@@ -77,7 +83,9 @@ const TaskList = () => {
       if (sortBy === "title") {
         return a.title.localeCompare(b.title);
       } else {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
       }
     });
 
@@ -92,7 +100,10 @@ const TaskList = () => {
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex gap-2 items-center">
             <label className="text-sm">Filter:</label>
-            <Select value={filterStatus} onValueChange={(e) => setFilterStatus(e as any)}>
+            <Select
+              value={filterStatus}
+              onValueChange={(e) => setFilterStatus(e as any)}
+            >
               <SelectTrigger>
                 <SelectValue placeholder="All" />
               </SelectTrigger>
@@ -100,6 +111,7 @@ const TaskList = () => {
                 <SelectItem value="all">All</SelectItem>
                 <SelectItem value="completed">Completed</SelectItem>
                 <SelectItem value="pending">Pending</SelectItem>
+                <SelectItem value="in_progress">In Progress</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -149,18 +161,22 @@ const TaskList = () => {
         ) : (
           <AnimatePresence>
             {filteredSortedTasks.length > 0 ? (
-              filteredSortedTasks.map((task) => (
-                <TaskItem
-                  key={task.id}
-                  task={task}
-                  onEdit={() => openEdit(task)}
-                  onDelete={() => openDelete(task)}
-                />
-              ))
+              <ScrollArea className="h-[560px] space-y-5 p-1 sm:p-4">
+                {filteredSortedTasks.map((task) => (
+                  <TaskItem
+                    key={task.id}
+                    task={task}
+                    onEdit={() => openEdit(task)}
+                    onDelete={() => openDelete(task)}
+                  />
+                ))}
+              </ScrollArea>
             ) : (
               <li className="border flex items-center rounded-lg p-4 bg-background shadow-sm space-y-2">
                 <div className="flex flex-1 flex-col gap-2">
-                  <p className="text-sm text-muted-foreground">No tasks found</p>
+                  <p className="text-sm text-muted-foreground">
+                    No tasks found
+                  </p>
                 </div>
               </li>
             )}

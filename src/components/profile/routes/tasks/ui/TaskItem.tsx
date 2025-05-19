@@ -19,7 +19,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="border rounded-lg p-4 flex justify-between items-start bg-background shadow-sm"
+      className="border mb-4 rounded-lg p-4 flex justify-between items-start bg-background shadow-sm"
     >
       <div className="flex-1">
         <h3 className="font-semibold text-lg mb-1">{task.title}</h3>

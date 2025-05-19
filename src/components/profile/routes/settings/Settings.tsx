@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuthStore } from "@/store/auth.store";
 import { toast } from "sonner";
-import { changePasword } from "@/actions/user.action";
+import { changePasword, updateProfile } from "@/actions/user.action";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 
 const containerVariants = {
@@ -36,8 +36,8 @@ const cardVariants = {
 
 const Settings = () => {
   const { user } = useAuthStore();
-  const [name, setName] = useState(user?.name);
-  const [email, setEmail] = useState(user?.email);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -46,6 +46,13 @@ const Settings = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  useEffect(()=>{
+    if(user){
+      setUsername(user.username);
+      setEmail(user.email);
+    }
+  } , [])
 
   const handleChangePassword = async () => {
     setLoading(true);
@@ -95,6 +102,37 @@ const Settings = () => {
     }
   };
 
+  const handleUpdateProfile = async () => {
+    setLoading(true);
+
+    if (!username!.trim() || !email!.trim()) {
+      toast.error("Please enter both username and email", {
+        style: { backgroundColor: "#ec003f" },
+      });
+      setLoading(false);
+      return;
+    }
+
+    const res = await updateProfile(
+      username as string,
+      email as string,
+      user?.id as string
+    );
+
+    if (res.success) {
+      toast.success("Profile updated successfully", {
+        style: { backgroundColor: "#00bc7d" },
+      });
+      useAuthStore.getState().getUser();
+    } else {
+      toast.error(res.message || res.error || "Something went wrong", {
+        style: { backgroundColor: "#ec003f" },
+      });
+    }
+
+    setLoading(false);
+  };
+
   return (
     <motion.main
       className="max-w-7xl w-full mx-auto p-6 space-y-8"
@@ -121,18 +159,16 @@ const Settings = () => {
             <div className="flex flex-col gap-2">
               <Label htmlFor="name">Name</Label>
               <Input
-                defaultValue={user?.name}
-                value={name}
+                value={username}
                 id="name"
                 type="text"
                 placeholder="Your name"
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="flex flex-col gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
-                defaultValue={user?.email}
                 value={email}
                 id="email"
                 type="email"
@@ -140,7 +176,17 @@ const Settings = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <Button className="mt-4 cursor-pointer">Save Profile</Button>
+            <Button
+              className="mt-4 cursor-pointer"
+              onClick={handleUpdateProfile}
+              disabled={loading}
+            >
+              {loading ? (
+                <Loader2 className="size-5 animate-spin" />
+              ) : (
+                "Save Profile"
+              )}
+            </Button>
           </CardContent>
         </Card>
       </motion.div>
