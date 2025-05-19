@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📝 TaskFlow 💚🖤
 
-## Getting Started
+A modern, full-stack Todo application built with **Next.js**, **Prisma**, and **TypeScript** featuring user authentication, task management, and real-time updates. Manage your tasks efficiently with priority and status tracking!
 
-First, run the development server:
+**🚀 Live Demo:** [https://task-flow-tau-eight.vercel.app/](https://task-flow-tau-eight.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- 🔐 **User Authentication** (Signup, Signin, Logout)  
+- 🗂️ **Task Management** (Add, Update, Delete, View Tasks)  
+- 🎯 **Task Priorities** (Low, Medium, High) and **Status** (Pending, In Progress, Completed)  
+- 🛡️ Secure password handling with bcrypt  
+- 📅 Due date for tasks with date validation  
+- 🔄 Real-time UI updates with Next.js server actions and cache revalidation  
+- 🌗 Dark and Light theme support with `next-themes`  
+- ⚡ Optimized performance using TurboPack and Prisma's efficient ORM  
+- 💾 Persistent client state management with Zustand + persistence middleware  
+- 🛠️ Fully typed with TypeScript for enhanced developer experience  
+- 📦 Fully integrated with Tailwind CSS for styling and Radix UI for accessible components
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" width="40" height="40" />&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" width="40" height="40" />&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" width="40" height="40" />&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg" alt="Prisma" width="40" height="40" />&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" width="40" height="40" />&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg" alt="Tailwind CSS" width="40" height="40" />&nbsp;&nbsp;
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/zustand/zustand-original.svg" alt="Zustand" width="40" height="40" />
+</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Installation
 
-## Deploy on Vercel
+1. Clone the repo:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/yourusername/todo-app.git
+   cd todo-app
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up your .env file with the following variables:
+
+  ```bash
+   DATABASE_URL=your_postgresql_connection_string
+   JWT_SECRET=your_jwt_secret_key
+   ```
+
+4. Generate Prisma client and run migrations:
+
+   ```bash
+   npx prisma generate
+   npx prisma migrate dev --name init
+   ```
+
+5. Run the project:
+    ```bash
+    npm run build
+    npm run start
+    ```
+
+## Hope You like it my firend 😉
