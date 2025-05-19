@@ -3,7 +3,7 @@
 import React from "react";
 import { Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Task } from "@/generated/prisma";
+import { Task } from "@/interfaces/interfaces";
 import { motion } from "framer-motion";
 
 interface TaskItemProps {

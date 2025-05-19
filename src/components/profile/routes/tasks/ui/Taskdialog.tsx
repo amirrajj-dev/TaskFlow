@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { PRIORITY, STATUS, Task } from "@/generated/prisma";
+import { PRIORITY, STATUS, Task } from "@/interfaces/interfaces";
 import { toast } from "sonner";
 import { useAuthStore } from "@/store/auth.store";
 import { Loader2 } from "lucide-react";
@@ -41,8 +41,8 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState<STATUS>("PENDING");
-  const [priority, setPriority] = useState<PRIORITY>("LOW");
+  const [status, setStatus] = useState<STATUS>(STATUS.PENDING);
+  const [priority, setPriority] = useState<PRIORITY>(PRIORITY.LOW);
   const [dueDate, setDueDate] = useState("");
   const { user } = useAuthStore();
   const {editingTask , setEditingTask} = useTaskStore()
@@ -51,8 +51,8 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
     if (editingTask) {
       setTitle(editingTask.title);
       setDescription(editingTask.description || "");
-      setStatus(editingTask.status);
-      setPriority(editingTask.priority);
+      setStatus(editingTask.status as STATUS);
+      setPriority(editingTask.priority as PRIORITY);
       setDueDate(editingTask.dueDate ? new Date(editingTask.dueDate).toISOString().slice(0 , 10) : "");
     } else {
       resetDialog();
@@ -85,8 +85,8 @@ const TaskDialog: React.FC<TaskDialogProps> = ({
   function resetDialog() {
     setTitle("");
     setDescription("");
-    setStatus("PENDING");
-    setPriority("LOW");
+    setStatus("PENDING" as STATUS);
+    setPriority("LOW" as PRIORITY);
     setDueDate("");
   }
 

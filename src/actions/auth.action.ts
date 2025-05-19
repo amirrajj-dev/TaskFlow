@@ -3,9 +3,9 @@
 import jwt  from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { cookies } from 'next/headers'
-import { User } from '@/generated/prisma'
 import prisma from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
+import { User } from '@/interfaces/interfaces'
 
 const  emailReg = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/
 

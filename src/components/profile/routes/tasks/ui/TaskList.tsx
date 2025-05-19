@@ -1,7 +1,7 @@
 "use client";
 import React, { useMemo, useState } from "react";
 import TaskItem from "./TaskItem";
-import { Task } from "@/generated/prisma";
+import { Task } from "@/interfaces/interfaces";
 import { AnimatePresence } from "framer-motion";
 import { useTaskStore } from "@/store/task.store";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -165,9 +165,9 @@ const TaskList = () => {
                 {filteredSortedTasks.map((task) => (
                   <TaskItem
                     key={task.id}
-                    task={task}
-                    onEdit={() => openEdit(task)}
-                    onDelete={() => openDelete(task)}
+                    task={task as Task}
+                    onEdit={() => openEdit(task as Task)}
+                    onDelete={() => openDelete(task as Task)}
                   />
                 ))}
               </ScrollArea>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Task } from "@/generated/prisma";
+import { Task } from "@/interfaces/interfaces";
 import { addTask, deleteTask, getTasks, updateTask } from "@/actions/task.action";
 import { toast } from "sonner";
 

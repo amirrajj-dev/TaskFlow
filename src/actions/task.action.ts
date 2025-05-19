@@ -1,9 +1,9 @@
 'use server'
 
-import { Task } from "@/generated/prisma";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "./auth.action";
 import { revalidatePath } from "next/cache";
+import { Task } from "@/interfaces/interfaces";
 
 export const addTask = async (
   task: Pick<Task, "title" | "description" | "status" | "priority" | "dueDate">

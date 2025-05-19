@@ -5,8 +5,8 @@ import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TaskList from "./ui/TaskList";
 import TaskDialog from "./ui/Taskdialog";
-import type { Task } from "@/generated/prisma";
 import { useTaskStore } from "@/store/task.store";
+import { Task } from "@/interfaces/interfaces";
 
 const Tasks = () => {
   const {addTask , editTask , getUserTasks , isLoading , openAddEditDialog , setOpenAddEditDialog , setEditingTask , editingTask} = useTaskStore()
@@ -20,7 +20,7 @@ const Tasks = () => {
     setOpenAddEditDialog(true);
   };
 
-  const saveTask = async (task: Omit<Task, "createdAt" | "updatedAt" | "id">) => {
+  const saveTask = async (task : Omit<Task, "id" | "createdAt" | "updatedAt">) => {
     if (editingTask) {
       console.log(editingTask);
       const res = await editTask(editingTask.id, task);
