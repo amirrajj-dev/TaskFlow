@@ -100,7 +100,7 @@ const Navbar = () => {
                         Profile
                       </Button>
                     </Link>
-                    <Button variant="ghost" className="w-full cursor-pointer">
+                    <Button onClick={()=>handleLogout()} variant="ghost" className="w-full cursor-pointer">
                       <LogOut className="w-4 h-4 mr-2" />
                       Logout
                     </Button>
